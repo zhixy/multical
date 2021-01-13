@@ -85,6 +85,13 @@ namespace aslam {
       _errorTermMap.clear();
     }
 
+    /// \brief clear the error terms.
+    void OptimizationProblem::clearAllErrorTerms()
+    {
+      _errorTerms.clear();
+      _errorTermMap.clear();
+    }
+
 
     size_t OptimizationProblem::numDesignVariablesImplementation() const
     {

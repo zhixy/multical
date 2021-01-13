@@ -8,7 +8,7 @@ namespace aslam {
   
     struct Optimizer2Options {
       Optimizer2Options() :
-        convergenceDeltaJ(1e-3),
+        convergenceJDescentRatioThreshold(1e-5),
         convergenceDeltaX(1e-3),
         maxIterations(20),
         verbose(false),
@@ -17,7 +17,7 @@ namespace aslam {
       {};
 
       /// \brief stop when steps cause changes in the objective function below this threshold.
-      double convergenceDeltaJ;
+      double convergenceJDescentRatioThreshold;
 
       /// \brief stop when the maximum change in and component of a design variable drops below this threshold
       double convergenceDeltaX;
@@ -47,7 +47,7 @@ namespace aslam {
     {
       /// \brief stop when steps cause changes in the objective function below this threshold.
       out << "Optimizer2Options:\n";
-      out << "\tconvergenceDeltaJ: " << options.convergenceDeltaJ << std::endl;
+      out << "\tconvergenceJDescentRatioThreshold: " << options.convergenceJDescentRatioThreshold << std::endl;
       /// \brief stop when the maximum change in and component of a design variable drops below this threshold
       out << "\tconvergenceDeltaX: " << options.convergenceDeltaX << std::endl;
       /// \brief stop if we reach this number of iterations without hitting any of the above stopping criteria.

@@ -41,8 +41,11 @@ void exportOptimizationProblem() {
     boost::python::bases<aslam::backend::OptimizationProblemBase> >(
       "CalibrationOptimizationProblem", init<>())
     .def("addDesignVariable", &OptimizationProblem::addDesignVariable)
+    .def("removeDesignVariable", &OptimizationProblem::removeDesignVariable)
     .def("addErrorTerm", &OptimizationProblem::addErrorTerm)
+    .def("removeErrorTerm", &OptimizationProblem::removeErrorTerm)
     .def("clear", &OptimizationProblem::clear)
+    .def("clearAllErrorTerms", &OptimizationProblem::clearAllErrorTerms)
     ;
 
   using aslam::calibration::IncrementalOptimizationProblem;

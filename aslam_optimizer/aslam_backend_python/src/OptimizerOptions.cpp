@@ -9,7 +9,7 @@ void exportOptimizerOptions()
   using namespace boost::python;
   using namespace aslam::backend;
   class_<OptimizerOptions>("OptimizerOptions", init<>())
-    .def_readwrite("convergenceDeltaJ",&OptimizerOptions::convergenceDeltaJ)
+    .def_readwrite("convergenceJDescentRatioThreshold",&OptimizerOptions::convergenceJDescentRatioThreshold)
     .def_readwrite("convergenceDeltaX",&OptimizerOptions::convergenceDeltaX)
     .def_readwrite("levenbergMarquardtLambdaInit",&OptimizerOptions::levenbergMarquardtLambdaInit)   
     .def_readwrite("levenbergMarquardtLambdaBeta", &OptimizerOptions::levenbergMarquardtLambdaBeta)
@@ -27,7 +27,7 @@ void exportOptimizerOptions()
   using namespace boost::python;
   using namespace aslam::backend;
   class_<Optimizer2Options>("Optimizer2Options", init<>())
-    .def_readwrite("convergenceDeltaJ",&Optimizer2Options::convergenceDeltaJ)
+    .def_readwrite("convergenceJDescentRatioThreshold",&Optimizer2Options::convergenceJDescentRatioThreshold)
     .def_readwrite("convergenceDeltaX",&Optimizer2Options::convergenceDeltaX)
 
       //.def_readwrite("doLevenbergMarquardt",&Optimizer2Options::doLevenbergMarquardt) 

@@ -48,6 +48,9 @@ namespace aslam {
       /// \brief clear the design variables and error terms.
       void clear();
 
+      /// \brief clear the error terms.
+      void clearAllErrorTerms();
+
       /// \brief used for debugging...is the design variable in the problem.
       bool isDesignVariableInProblem(const DesignVariable* dv);
 

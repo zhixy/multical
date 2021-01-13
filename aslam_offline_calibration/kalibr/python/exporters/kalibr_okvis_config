@@ -96,7 +96,7 @@ if __name__ == "__main__":
     for cidx in range(0, camchain.numCameras()):
         camConfig = camchain.getCameraParameters(cidx)
         
-        T_SC = camchain.getExtrinsicsImuToCam(cidx).inverse().T()
+        T_SC = camchain.getExtrinsicsReferenceToCam(cidx).inverse().T()
         CONFIG += printCameraBlock(camConfig, T_SC)
 
     # get an instance of RosPack with the default search paths

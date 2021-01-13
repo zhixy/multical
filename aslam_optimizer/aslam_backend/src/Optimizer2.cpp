@@ -31,7 +31,7 @@ namespace aslam {
 
         Optimizer2::Optimizer2(const sm::PropertyTree& config, boost::shared_ptr<LinearSystemSolver> linearSystemSolver, boost::shared_ptr<TrustRegionPolicy> trustRegionPolicy) {
           Optimizer2Options options;
-          options.convergenceDeltaJ = config.getDouble("convergenceDeltaJ", options.convergenceDeltaJ);
+          options.convergenceJDescentRatioThreshold = config.getDouble("convergenceJDescentRatioThreshold", options.convergenceJDescentRatioThreshold);
           options.convergenceDeltaX = config.getDouble("convergenceDeltaX", options.convergenceDeltaX);
           options.maxIterations = config.getInt("maxIterations", options.maxIterations);
           options.doSchurComplement = config.getBool("doSchurComplement", options.doSchurComplement);
@@ -203,7 +203,8 @@ namespace aslam {
             _options.verbose && std::cout << "[" << srv.iterations << ".0]: J: " << _J << std::endl;
             // Set up the estimation problem.
             double deltaX = _options.convergenceDeltaX + 1.0;
-            double deltaJ = _options.convergenceDeltaJ + 1.0;
+            double JDescentRatio = _options.convergenceJDescentRatioThreshold + 1.0;
+            double deltaJ = 0.0;
             bool previousIterationFailed = false;
             bool linearSolverFailure = false;
 
@@ -215,7 +216,7 @@ namespace aslam {
             while (srv.iterations <  _options.maxIterations &&
                    srv.failedIterations < _options.maxIterations &&
                    ((deltaX > _options.convergenceDeltaX &&
-                     fabs(deltaJ) > _options.convergenceDeltaJ) ||
+                     fabs(JDescentRatio) > _options.convergenceJDescentRatioThreshold) ||
                     linearSolverFailure)) {
 
                 timeSolve.start();
@@ -237,10 +238,11 @@ namespace aslam {
                     evaluateError(true);
                     timeErr.stop();
                     deltaJ = _p_J - _J;
+                    JDescentRatio = deltaJ / _p_J;
                     // This was a regression.
                     if( _trustRegionPolicy->revertOnFailure() )
                     {
-                        if(deltaJ < 0.0)
+                        if(JDescentRatio < 0.0)
                         {
                             _options.verbose && std::cout << "Last step was a regression. Reverting\n";
                             revertLastStateUpdate();

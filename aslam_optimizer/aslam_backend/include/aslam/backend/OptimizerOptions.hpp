@@ -6,7 +6,7 @@ namespace aslam {
 
     struct OptimizerOptions {
       OptimizerOptions() :
-        convergenceDeltaJ(1e-3),
+        convergenceJDescentRatioThreshold(1e-5),
         convergenceDeltaX(1e-3),
         maxIterations(20),
         levenbergMarquardtLambdaInit(1e-3),
@@ -26,7 +26,7 @@ namespace aslam {
       {};
 
       /// \brief stop when steps cause changes in the objective function below this threshold.
-      double convergenceDeltaJ;
+      double convergenceJDescentRatioThreshold;
 
       /// \brief stop when the maximum change in and component of a design variable drops below this threshold
       double convergenceDeltaX;

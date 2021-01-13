@@ -26,7 +26,7 @@ def initBagDataset(bagfile, topic, from_to):
     print "\tDataset:          {0}".format(bagfile)
     print "\tTopic:            {0}".format(topic)
     reader = kc.BagImageDatasetReader(bagfile, topic, bag_from_to=from_to)
-    print "\tNumber of images: {0}".format(reader.numImages())
+    print "\tNumber of images: {0}".format(reader.numMessages())
     return reader
 
 #available models

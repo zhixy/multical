@@ -53,7 +53,7 @@ if parsed.image_topics is not None:
       dataset = kc.BagImageDatasetReader(parsed.bag, topic)
       os.makedirs("{0}/cam{1}".format(parsed.output_folder, cidx))  
       
-      numImages = dataset.numImages()
+      numImages = dataset.numMessages()
       #progress bar
       print "Extracting {0} images from topic {1}".format(numImages, dataset.topic)
       iProgress.reset(numImages)

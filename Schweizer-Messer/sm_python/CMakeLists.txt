@@ -5,7 +5,7 @@ project(sm_python)
 
 find_package(catkin REQUIRED COMPONENTS cmake_modules sm_common numpy_eigen sm_kinematics 
                                         sm_timing sm_logging sm_matrix_archive
-                                        sm_property_tree python_module)
+                                        sm_property_tree sm_permutohedral python_module)
 include_directories(${catkin_INCLUDE_DIRS})
 find_package(Eigen REQUIRED)
 
@@ -51,6 +51,7 @@ add_python_export_library(${PY_PROJECT_NAME} ${PY_PACKAGE_DIR}
   src/Logging.cpp
   src/exportNsecTime.cpp
   src/random.cpp
+  src/exportPermutohedralLattice.cpp
 )
 
 target_link_libraries(${PY_PROJECT_NAME} ${Boost_LIBRARIES})

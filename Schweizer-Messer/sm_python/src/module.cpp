@@ -23,6 +23,7 @@ void exportNsecTime();
 void exportRandom();
 void export_eigen_property_tree();
 void export_kinematics_property_tree();
+void exportPermutohedralLattice();
 
 void printTiming()
 {
@@ -49,4 +50,5 @@ BOOST_PYTHON_MODULE(libsm_python)
   exportRandom();
   export_eigen_property_tree();
   export_kinematics_property_tree();
+  exportPermutohedralLattice();
 }

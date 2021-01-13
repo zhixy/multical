@@ -510,7 +510,7 @@ TYPED_TEST(OPTBSplineTestSuiteT2, testOptimizingEvaluationTime)
 		Optimizer opt;
 		opt.setProblem(&problem, false);
 		opt.options().verbose = false;
-		opt.options().convergenceDeltaJ = 0;
+		opt.options().convergenceJDescentRatioThreshold = 0;
 		opt.options().convergenceDeltaX = 1E-9;
 		opt.optimize();
 

@@ -135,7 +135,7 @@ if __name__ == "__main__":
         camConfig = camchain.getCameraParameters(cidx)
 
         # TF_imu_cam transforms points from camera to imu frame (inverse transformation of Kalibr camchain file)
-        TF_imu_cam = camchain.getExtrinsicsImuToCam(cidx).inverse()
+        TF_imu_cam = camchain.getExtrinsicsReferenceToCam(cidx).inverse()
 
         # T_SC is translational part of transformation from camera to imu frame
         t_SC = TF_imu_cam.t()

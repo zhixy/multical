@@ -16,7 +16,7 @@ catkin_package(
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/)
 
 find_package(Eigen REQUIRED)
-find_package(OpenCV REQUIRED)
+find_package(OpenCV 3 REQUIRED)
 
 add_definitions(-fPIC -O3)
 include_directories(include  ${Eigen_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})

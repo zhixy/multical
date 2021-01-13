@@ -133,7 +133,7 @@ def stereoCalibrate(camL_geometry, camH_geometry, obslist, distortionActive=Fals
     options.verbose = True if sm.getLoggingLevel()==sm.LoggingLevel.Debug else False
     options.nThreads = 4
     options.convergenceDeltaX = 1e-3
-    options.convergenceDeltaJ = 1
+    options.convergenceJDescentRatioThreshold = 1e-6
     options.maxIterations = 200
     options.trustRegionPolicy = aopt.LevenbergMarquardtTrustRegionPolicy(10)
 
@@ -241,7 +241,7 @@ def calibrateIntrinsics(cam_geometry, obslist, distortionActive=True, intrinsics
     options.verbose = True if sm.getLoggingLevel()==sm.LoggingLevel.Debug else False
     options.nThreads = 4
     options.convergenceDeltaX = 1e-3
-    options.convergenceDeltaJ = 1
+    options.convergenceJDescentRatioThreshold = 1e-6
     options.maxIterations = 200
     options.trustRegionPolicy = aopt.LevenbergMarquardtTrustRegionPolicy(10)
 
@@ -352,7 +352,7 @@ def solveFullBatch(cameras, baseline_guesses, graph):
     options.verbose = True if sm.getLoggingLevel()==sm.LoggingLevel.Debug else False
     options.nThreads = 4
     options.convergenceDeltaX = 1e-3
-    options.convergenceDeltaJ = 1
+    options.convergenceJDescentRatioThreshold = 1e-6
     options.maxIterations = 250
     options.trustRegionPolicy = aopt.LevenbergMarquardtTrustRegionPolicy(10)
 

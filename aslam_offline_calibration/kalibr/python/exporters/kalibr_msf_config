@@ -22,9 +22,9 @@ if __name__ == "__main__":
             
     #load the transforms
     camchain_SB = kc.ConfigReader.CameraChainParameters(parsed.viYaml)
-    T_SB = camchain_SB.getExtrinsicsImuToCam(0)
+    T_SB = camchain_SB.getExtrinsicsReferenceToCam(0)
     camchain_B = kc.ConfigReader.CameraChainParameters(parsed.mavYaml)
-    T_B = camchain_B.getExtrinsicsImuToCam(0)
+    T_B = camchain_B.getExtrinsicsReferenceToCam(0)
 
     #find the transformation between the imus
     T_B_SB = T_B.inverse().T().dot(T_SB.T()); 

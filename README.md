@@ -1,50 +1,83 @@
-![Kalibr](https://raw.githubusercontent.com/wiki/ethz-asl/kalibr/images/kalibr_small.png)
+# Multical
 
-*Ubuntu 14.04+ROS indigo*: [![Build Status](https://jenkins.asl.ethz.ch/buildStatus/icon?job=kalibr_weekly/label=ubuntu-trusty)](https://jenkins.asl.ethz.ch/job/kalibr_weekly/label=ubuntu-trusty/) *Ubuntu 16.04+ROS kinetic*: [![Build Status](https://jenkins.asl.ethz.ch/buildStatus/icon?job=kalibr_weekly/label=ubuntu-trusty)](https://jenkins.asl.ethz.ch/job/kalibr_weekly/label=ubuntu-xenial/)
+**Mul**tiple **t**argets for multiple **I**MUs, **c**ameras **a**nd **L**iDARs (Lasers) spatiotemporal calibration
 
 ## Introduction
-Kalibr is a toolbox that solves the following calibration problems:
+Multical is a calibration toolbox to simultaneously calibrate the spatial and temporal 
+parameters between multiple IMUs, cameras and
+LiDARs(laser range finders). Nowadays, camera, LiDAR and Inertial Measurement Unit (IMU) are widely used in mobile robots and
+autonomous cars, and they are usually equipped with two and more cameras and LiDARs to increase fields of view (FoVs)
+as large as possible.
+The calibration of these sensors becomes much more cumbersome with existing methods and toolboxes, mainly for two reasons:
+a) Due to the size limitation, one calibration target usually cannot cover all sensors.
+It is hard to calibrate all sensors simultaneously, if some sensors do not overlap with each others.
+b) There are methods providing LiDAR-camera, LiDAR-IMU and camera-IMU calibration, but very few approaches (if any)
+can jointly calibrate multiple IMUs, cameras and LiDARs, rather than in pairs.
+Therefore, an approach which can calibrate multiple cameras, LiDARs and IMUs simultaneously will facilitate the robotics
+community.
 
-1. **Multiple camera calibration**: 
-    intrinsic and extrinsic calibration of a camera-systems with non-globally shared overlapping fields of view
-1. **Visual-inertial calibration calibration (camera-IMU)**:
-    spatial and temporal calibration of an IMU w.r.t a camera-system
-1. **Rolling Shutter Camera calibration**:
-    full intrinsic calibration (projection, distortion and shutter parameters) of rolling shutter cameras
+To this end, we utilize multiple calibration targets to cover the FoVs of
+all sensors at the same time in this toolbox.
+Comparing to existing calibration libraries, the core features of Multical are
+1. utilizing non-repeated April tags to distinguish multiple planar boards as 
+   calibration targets. Moreover, the mount and position of targets are not limited,
+   which are decided by the users according to the FOV of sensors to be calibrated.
+   The following figure shows an example layout of calibration scenario, 
+   which consists of six apriltag boards.  
+   ![scenario](figures/scenario_cropped.jpg)
+1. Multical is very flexible regarding types and mount of sensors. 
+   Besides one mandatory camera, the users can add IMUs, LiDARs and more cameras
+   according to their demands, _i.e._, not only IMUs-cameras-LiDARs but
+   reduced calibration problems, like
+   IMUs-cameras, cameras-LiDARs even multi-camera calibration are all supported. 
+1. Multical has a series of algorithms to estimate prior knowledge of the extrinsic parameters,
+   so it does not force the users to give any initial guesses,
+   including the relative poses of apriltag boards.
 
+**Please find more information on the [wiki pages](https://github.com/zhixy/multical/wiki) of this repository.**
 
-**Please find more information on the [wiki pages](https://github.com/ethz-asl/kalibr/wiki) of this repository.**
+This library is developed based on [Kalibr](https://github.com/ethz-asl/kalibr),
+we reserve all the features, functions and tools of Kalibr in this library.
+By reusing and extending the codes of Kalibr, we develop Multical. 
 
-**For questions or comments, please open an issue on Github.**
-
-## Tutorial: IMU-camera calibration
-A video tutorial for the IMU-camera calibration can be found here:
-
-[![alt text](https://user-images.githubusercontent.com/5337083/44033014-50208b8a-9f09-11e8-8e9a-d7d6d3c69d97.png)](https://m.youtube.com/watch?v=puNXsnrYWTY "imu cam calib")
-
-(Credits: @indigomega)
-
-## Authors
-* Paul Furgale ([email](paul.furgale@mavt.ethz.ch))
-* Hannes Sommer ([email](hannes.sommer@mavt.ethz.ch))
-* Jérôme Maye ([email](jerome.maye@mavt.ethz.ch))
-* Jörn Rehder ([email](joern.rehder@mavt.ethz.ch))
-* Thomas Schneider ([email](schneith@ethz.ch))
-* Luc Oth
-
-## References
-The calibration approaches used in Kalibr are based on the following papers. Please cite the appropriate papers when using this toolbox or parts of it in an academic publication.
-
-1. <a name="joern1"></a>Joern Rehder, Janosch Nikolic, Thomas Schneider, Timo Hinzmann, Roland Siegwart (2016). Extending kalibr: Calibrating the extrinsics of multiple IMUs and of individual axes. In Proceedings of the IEEE International Conference on Robotics and Automation (ICRA), pp. 4304-4311, Stockholm, Sweden.
-1. <a name="paul1"></a>Paul Furgale, Joern Rehder, Roland Siegwart (2013). Unified Temporal and Spatial Calibration for Multi-Sensor Systems. In Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Tokyo, Japan.
-1. <a name="paul2"></a>Paul Furgale, T D Barfoot, G Sibley (2012). Continuous-Time Batch Estimation Using Temporal Basis Functions. In Proceedings of the IEEE International Conference on Robotics and Automation (ICRA), pp. 2088–2095, St. Paul, MN.
-1. <a name="jmaye"></a> J. Maye, P. Furgale, R. Siegwart (2013). Self-supervised Calibration for Robotic Systems, In Proc. of the IEEE Intelligent Vehicles Symposium (IVS)
-1. <a name="othlu"></a>L. Oth, P. Furgale, L. Kneip, R. Siegwart (2013). Rolling Shutter Camera Calibration, In Proc. of the IEEE Computer Vision and Pattern Recognition (CVPR)
-
-## Acknowledgments
-This work is supported in part by the European Union's Seventh Framework Programme (FP7/2007-2013) under grants #269916 (V-Charge), and #610603 (EUROPA2).
+## Reference
+**A paper about Multical is been writing.**
 
 ## License (BSD)
+
+BSD 3-Clause License
+
+Copyright (c) 2021, Xiangyang Zhi
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+We heavily reuse the code of Kalibr, 
+and the following lines are about the license of Kalibr.
+
 Copyright (c) 2014, Paul Furgale, Jérôme Maye and Jörn Rehder, Autonomous Systems Lab, ETH Zurich, Switzerland<br>
 Copyright (c) 2014, Thomas Schneider, Skybotix AG, Switzerland<br>
 All rights reserved.<br>

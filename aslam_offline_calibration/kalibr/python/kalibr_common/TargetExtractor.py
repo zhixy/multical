@@ -24,14 +24,18 @@ def multicoreExtractionWrapper(detector, taskq, resultq, clearImages, noTransfor
             success, obs = detector.findTarget(stamp, np.array(image))
             
         if clearImages:
-            obs.clearImage()
+            if type(obs) is list:
+                for ob in obs:
+                    ob.clearImage()
+            else:
+                obs.clearImage()
         if success:
             resultq.put( (obs, idx) )
 
 def extractCornersFromDataset(dataset, detector, multithreading=False, numProcesses=None, clearImages=True, noTransformation=False):
     print "Extracting calibration target corners"    
     targetObservations = []
-    numImages = dataset.numImages()
+    numImages = dataset.numMessages()
     
     # prepare progess bar
     iProgress = sm.Progress2(numImages)
@@ -90,7 +94,11 @@ def extractCornersFromDataset(dataset, detector, multithreading=False, numProces
             else:
                 success, observation = detector.findTarget(timestamp, np.array(image))
             if clearImages:
-                observation.clearImage()
+                if type(observation) is list:
+                    for obs in observation:
+                        obs.clearImage()
+                else:
+                    observation.clearImage()
             if success == 1:
                 targetObservations.append(observation)
             iProgress.sample()

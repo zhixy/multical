@@ -45,6 +45,7 @@ void exportOptimizationProblem()
 .def("clear", &OptimizationProblem::clear)
 	/// \brief remove an error term:
 .def("removeErrorTerm", &OptimizationProblem::removeErrorTerm)
+.def("clearAllErrorTerms", &OptimizationProblem::clearAllErrorTerms)
     ;
 
 

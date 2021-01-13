@@ -216,7 +216,8 @@ namespace aslam {
 
               // Set up the estimation problem.
               double deltaX = _options.convergenceDeltaX + 1.0;
-              double deltaJ = _options.convergenceDeltaJ + 1.0;
+              double JDescentRatio = _options.convergenceJDescentRatioThreshold + 1.0;
+              double deltaJ = 0.0;
 
               // choose initial delta to be something between GN and SD but biased towards GN
               // would be ideal but to avoid computing the GN solution in the first step before
@@ -243,7 +244,7 @@ namespace aslam {
             // Loop until convergence
             while(   srv.iterations   < _options.maxIterations &&
                  deltaX       > _options.convergenceDeltaX &&
-                     fabs(deltaJ)   > _options.convergenceDeltaJ)
+                     fabs(JDescentRatio)   > _options.convergenceJDescentRatioThreshold)
          // while( !evaluateStoppingCriterion() )
           {
               // calculate steepest descent step:
@@ -422,6 +423,7 @@ namespace aslam {
 
 
                 deltaJ = _p_J - _J;
+                JDescentRatio = deltaJ / _p_J;
                 //std::cout << "_p_J:" << _p_J << std::endl;
                 //std::cout << "_J:" << _J << std::endl;
                 if(_J < _p_J)
@@ -489,12 +491,12 @@ namespace aslam {
       _options.verbose && std::cout << "[" << srv.iterations << ".0]: J: " << _J << std::endl;
       // Set up the estimation problem.
       double deltaX = _options.convergenceDeltaX + 1.0;
-      double deltaJ = _options.convergenceDeltaJ + 1.0;
+      double deltaJ = _options.convergenceJDescentRatioThreshold + 1.0;
       bool isLmRegression = false;
       // Loop until convergence
       while (srv.iterations <  _options.maxIterations &&
              deltaX > _options.convergenceDeltaX &&
-             fabs(deltaJ) > _options.convergenceDeltaJ) {
+             fabs(deltaJ) > _options.convergenceJDescentRatioThreshold) {
         // *** build: J, U, Vi, Wi, ea, ebi
         if (! isLmRegression) {
           timeGn.start();

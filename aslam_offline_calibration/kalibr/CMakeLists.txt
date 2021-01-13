@@ -11,6 +11,7 @@ cs_add_library(${PROJECT_NAME}_errorterms
   src/EuclideanError.cpp
   src/GyroscopeError.cpp
   src/AccelerometerError.cpp
+  src/ScalarError.cpp
 )
 
 add_python_export_library(${PROJECT_NAME}_errorterms_python python/${PROJECT_NAME}_errorterms/..

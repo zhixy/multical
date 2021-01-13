@@ -51,7 +51,6 @@ void GridCalibrationTargetCheckerboard::initialize()
 {
   if (_options.showExtractionVideo) {
     cv::namedWindow("Checkerboard corners", CV_WINDOW_AUTOSIZE);
-    cvStartWindowThread();
   }
 }
 

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package>
+  <name>sm_permutohedral</name>
+  <version>0.0.1</version>
+  <description>sm_permutohedral</description>
+
+  <maintainer email="xy@xy.com">xy</maintainer>
+  <license>New BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>cmake_modules</build_depend>
+  <build_depend>eigen_catkin</build_depend>
+</package>

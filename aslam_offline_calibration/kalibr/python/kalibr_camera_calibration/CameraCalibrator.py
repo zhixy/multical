@@ -105,6 +105,9 @@ class TargetDetector(object):
                                                            options)
          
         elif targetType == 'aprilgrid':
+            if targetParams['numberTargets'] > 1:
+                RuntimeError('CameraCalibrator do not support multiple Aprilgrid boards right now')
+
             options = acv_april.AprilgridOptions()
             #enforce more than one row --> pnp solution can be bad if all points are almost on a line...
             options.minTagsForValidObs = int( np.max( [targetParams['tagRows'], targetParams['tagCols']] ) + 1 )

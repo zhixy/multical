@@ -166,7 +166,7 @@ def main():
                     cam_index).inverse()
                 T_c0_cn = T_c0_cnm1 * T_cnm1_cn
             elif 'T_cam_imu' in camchain.data[cam]:
-                T_c0_i = T_c0_cn * camchain.getExtrinsicsImuToCam(cam_index)
+                T_c0_i = T_c0_cn * camchain.getExtrinsicsReferenceToCam(cam_index)
                 calibration_visualization.add_coordinate_frame_plot(T_c0_i)
             intrinsics = np.asarray(camchain.data[cam]['intrinsics'])
             resolution = np.asarray(camchain.data[cam]['resolution'])

@@ -5,7 +5,7 @@
 #include <kalibr_errorterms/EuclideanError.hpp>
 #include <kalibr_errorterms/GyroscopeError.hpp>
 #include <kalibr_errorterms/AccelerometerError.hpp>
-
+#include <kalibr_errorterms/ScalarError.hpp>
 // The title of this library must match exactly
 BOOST_PYTHON_MODULE(libkalibr_errorterms_python)
 {
@@ -72,5 +72,9 @@ BOOST_PYTHON_MODULE(libkalibr_errorterms_python)
 			const aslam::backend::EuclideanExpression &>
 	("GyroscopeErrorEccentric(measurement, invR, M, Ma, C_b_w, acceleration_w, angularVelocity_b, angularAcceleration_b,)"
 			"C_i_b, r_b, bias, g_w"));
+
+    class_<ScalarError, boost::shared_ptr<ScalarError>, bases< ErrorTerm > >("ScalarError",
+            init<const double & , const Eigen::Matrix<double,1,1> &, const aslam::backend::ScalarExpression & >
+            ("ScalarError(measurement, invR, predictedMeasurement)"));
 
 }

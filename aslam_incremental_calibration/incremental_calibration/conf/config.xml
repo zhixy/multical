@@ -7,7 +7,7 @@
   <groupId>1</groupId>
   <verbose>false</verbose>
   <optimizer>
-    <convergenceDeltaJ>1e-3</convergenceDeltaJ>
+    <convergenceJDescentRatioThreshold>1e-5</convergenceJDescentRatioThreshold>
     <convergenceDeltaX>1e-3</convergenceDeltaX>
     <maxIterations>20</maxIterations>
     <linearSolverMaximumFails>0</linearSolverMaximumFails>
