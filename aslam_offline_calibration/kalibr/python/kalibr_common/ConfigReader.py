@@ -557,8 +557,8 @@ class ImuParameters(SensorParametersBase):
         print >> dest, self.extrinsics_field_name
         if self.extrinsics_field_name in self.data:
             print >> dest, self.formatIndented("    ", np.array(self.data[self.extrinsics_field_name]))
-        if "time_offset" in self.data:
-            print >> dest, "  time offset with respect to {0}: {1} [s]".format(self.reference_sensor_name, self.data["time_offset"])
+        if self.timeshift_field_name in self.data:
+            print >> dest, "  time offset with respect to {0}: {1} [s]".format(self.reference_sensor_name, self.data[self.timeshift_field_name])
 
         print >> dest, "  Update rate: {0}".format(update_rate)
         print >> dest, "  Accelerometer:"
@@ -829,6 +829,27 @@ class CameraChainParameters(ParametersBase):
 
         cam_param = self.getCameraParameters(camNr)
         return cam_param.getExtrinsicsReferenceToHere()
+
+    def checkTimeshiftToReference(self, camNr, time_shift):
+        if camNr >= self.numCameras():
+            self.raiseError("out-of-range: cam{0} not in chain!".format(camNr))
+
+        if not isinstance(time_shift, float):
+            self.raiseError("invalid timeshift (cam{0} in {1})".format(camNr, self.yamlFile))
+
+    @catch_keyerror
+    def getTimeshiftToReference(self, camNr):
+        if camNr >= self.numCameras():
+            self.raiseError("out-of-range: cam{0} not in chain!".format(camNr))
+
+        cam_param = self.getCameraParameters(camNr)
+        return cam_param.getTimeshiftToReference()
+
+    def setTimeshiftToReference(self, camNr, time_shift):
+        self.checkTimeshiftToReference(camNr, time_shift)
+        cam_param = self.getCameraParameters(camNr)
+        cam_param.setTimeshiftToReference(time_shift)
+        self.data["cam{0}".format(camNr)] = cam_param.getYamlDict()
 
     def checkCamOverlaps(self, camNr, overlap_list):
         if camNr >= self.numCameras():

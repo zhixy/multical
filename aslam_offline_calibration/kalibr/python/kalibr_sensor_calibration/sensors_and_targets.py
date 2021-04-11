@@ -467,7 +467,7 @@ class Camera():
         # store the timeshift (t_imu = t_cam + timeshiftCamToImuPrior)
         self.timeshiftCamToReferencePrior = shift
 
-        print "  Time shift camera to imu (t_imu = t_cam + shift):"
+        print "  Time shift camera to imu0 (t_imu0 = t_cam + shift):"
         print self.timeshiftCamToReferencePrior
 
     # initialize a pose spline using camera poses (pose spline = T_wb)
@@ -545,7 +545,8 @@ class Camera():
 
         # Add the time delay design variable.
         self.cameraTimeToReferenceTimeDv = aopt.Scalar(0.0)
-        self.cameraTimeToReferenceTimeDv.setActive(not noTimeCalibration)
+        is_timeshift_active = not noTimeCalibration and active
+        self.cameraTimeToReferenceTimeDv.setActive(is_timeshift_active)
         problem.addDesignVariable(self.cameraTimeToReferenceTimeDv, ic.CALIBRATION_GROUP_ID)
 
     def addCameraErrorTerms(self, problem, poseSplineDv, blakeZissermanDf=0.0, timeOffsetPadding=0.0):

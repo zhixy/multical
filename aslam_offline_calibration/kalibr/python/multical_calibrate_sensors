@@ -50,8 +50,7 @@ def parseArgs():
     Temporal calibration is enabled by default.
     
     multical_calibrate_sensors --bag MYROSBAG.bag --cams camchain.yaml --lidars lidar.yaml(optional)  \\
-             --imus imu.yaml(optional) --target aprilgrid.yaml \\
-             --reference-sensor cam0
+             --imus imu.yaml(optional) --target aprilgrid.yaml
     
     camchain.yaml: is the config file including the intrinsic model
     and parameters, and initial extrinsic parameters are optional.
@@ -129,9 +128,6 @@ def parseArgs():
 
     # optimization options
     groupOpt = parser.add_argument_group('Optimization options')
-    groupOpt.add_argument('--reference-sensor', dest='reference_sensor',
-                          help='Specify the sensor as the reference coordinate system: cam0 or imu0',
-                          required=True)
     groupOpt.add_argument('--no-time-calibration', action='store_true',
                           dest='no_time',
                           help='Disable the temporal calibration',
@@ -201,17 +197,16 @@ def main():
 
     signal.signal(signal.SIGINT, signal_exit)
 
-    # create a calibrator instance
-    iCal = Calibrator(parsed.reference_sensor)
 
-    if parsed.reference_sensor == 'imu0':
+    if parsed.imu_yaml:
         is_camera_reference = False
-    elif parsed.reference_sensor == 'cam0':
-        is_camera_reference = True
+        reference_sensor_name = "imu0"
     else:
-        sm.logError(
-            "unrecognized reference sensor, please specify cam0 or imu0")
-        sys.exit(2)
+        is_camera_reference = True
+        reference_sensor_name = "cam0"
+
+    # create a calibrator instance
+    iCal = Calibrator(reference_sensor_name)
 
     has_imu = False
     if parsed.imu_yaml:
@@ -219,7 +214,7 @@ def main():
 
         imus = list()
         imu_config_list = kc.ImuSetParameters(parsed.imu_yaml,
-                                              parsed.reference_sensor)
+                                              reference_sensor_name)
         for i in range(imu_config_list.numImus()):
             imu_config = imu_config_list.getImuParameters(i)
             imu_config.printDetails()
@@ -264,7 +259,7 @@ def main():
     has_lidar = False
     if parsed.lidar_yaml:
         LiDARConfig = kc.LiDARListParameters(parsed.lidar_yaml,
-                                             parsed.reference_sensor)
+                                             reference_sensor_name)
         for idx in range(0, LiDARConfig.numLiDARs()):
             config = LiDARConfig.getLiDARParameters(idx)
             lidar = sens.LiDAR(config, parsed, targets)
@@ -273,7 +268,7 @@ def main():
         has_lidar = True
 
     print "Initializing camera chain:"
-    chain = kc.CameraChainParameters(parsed.chain_yaml, parsed.reference_sensor)
+    chain = kc.CameraChainParameters(parsed.chain_yaml, reference_sensor_name)
     chain.printDetails()
     camChain = sens.CameraChain(chain, targets, parsed, is_camera_reference)
 

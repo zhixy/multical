@@ -173,9 +173,9 @@ class Calibrator(object):
         ############################################
         # estimate the timeshift for all cameras to the main imu
         self.noTimeCalibration = noTimeCalibration
-        if not noTimeCalibration:
-            for cam in self.CameraChain.camList:
-                cam.findTimeshiftCameraImuPrior(self.ImuList[0], verbose)
+        # if not noTimeCalibration and self.ImuList:
+        #     for cam in self.CameraChain.camList:
+        #         cam.findTimeshiftCameraImuPrior(self.ImuList[0], verbose)
 
         # obtain orientation prior between main imu and camera chain (if no external input provided)
         # and initial estimate for the direction of gravity
@@ -271,7 +271,7 @@ class Calibrator(object):
             if not self.noTimeCalibration:
                 # imu to cam timeshift
                 timeshift = float(self.CameraChain.getResultTimeShift(camNr))
-                chain.setTimeshiftCamReference(camNr, timeshift)
+                chain.setTimeshiftToReference(camNr, timeshift)
 
         try:
             chain.writeYaml(resultFile)
