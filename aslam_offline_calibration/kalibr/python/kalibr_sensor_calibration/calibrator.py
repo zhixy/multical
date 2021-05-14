@@ -67,8 +67,9 @@ class Calibrator(object):
     def registerLiDAR(self, sensor):
         self.LiDARList.append(sensor)
 
-    def constructLiDARErrorTerms(self, threshold=0.1):
+    def constructLiDARErrorTerms(self, threshold=0.1, noTimeCalibration=False):
         for lidar in self.LiDARList:
+            lidar.setTimeOffsetActive(noTimeCalibration)
             lidar.findPointsOnTarget(self.poseDv, threshold=threshold)
             lidar.removeLiDARErrorTerms(self.problem)
             lidar.addLiDARErrorTerms(self.problem, self.poseDv)
@@ -79,7 +80,8 @@ class Calibrator(object):
         if self.LiDARList:
             num = 3
             for i in xrange(1, num):
-                self.constructLiDARErrorTerms(0.3 / i)
+                self.constructLiDARErrorTerms(0.3 / i,
+                                              self.noTimeCalibration or i == 1)
                 optimize(self.problem, maxIterations=maxIterations//i)
 
             for lidar in self.LiDARList:

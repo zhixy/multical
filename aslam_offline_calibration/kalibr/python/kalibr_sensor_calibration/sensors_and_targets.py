@@ -251,7 +251,11 @@ class LiDAR:
         if self.showPointCloud:
             coor = o3d.geometry.TriangleMesh.create_coordinate_frame(size=0.6)
             geometries.append(coor)
-            util.showPointCloud([self.pointCloud.T], geometries=geometries)
+            util.showPointCloud([self.pointCloud.T], geometries=geometries,
+                                window_name=self.config.getRosTopic())
+
+    def setTimeOffsetActive(self, noTimeCalibration=True):
+        self.lidarOffsetDv.setActive(not noTimeCalibration)
 
     def addDesignVariables(self, problem, noTimeCalibration=True):
         self.lidarOffsetDv = aopt.Scalar(0.0e-3)
