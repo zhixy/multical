@@ -373,9 +373,9 @@ def printResultTxt(cself, stream=sys.stdout):
         imu.getImuConfig().printDetails(stream)
         print >> stream, ""
 
-def showPointCloud(pointCloud, geometries=[]):
+def showPointCloud(pointCloud, geometries=[], window_name=''):
     visualizer = o3d.visualization.Visualizer()
-    visualizer.create_window()
+    visualizer.create_window(window_name=window_name)
     for geometry in geometries:
         visualizer.add_geometry(geometry)
     interval = 1. / len(pointCloud)

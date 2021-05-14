@@ -308,8 +308,9 @@ def main():
     util.printResults(iCal, withCov=parsed.recover_cov)
 
     if parsed.showpointcloud:
-        _, points = lidar.transformMeasurementsToWorldFrame(iCal.poseDv)
-        util.showPointCloud([points.T])
+        for idx, lidar in enumerate(iCal.LiDARList):
+            _, points = lidar.transformMeasurementsToWorldFrame(iCal.poseDv)
+            util.showPointCloud([points.T], window_name="lidar%d" % idx)
 
     print
     tag = "calibration_results-"
