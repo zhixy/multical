@@ -1,7 +1,7 @@
 # Multical
 
 **Mul**tiple **t**argets for multiple **I**MUs, **c**ameras **a**nd **L**iDARs (Lasers) spatiotemporal calibration
-
+## The dataset is available [here](https://robotics.shanghaitech.edu.cn/datasets/multical)
 ## Introduction
 Multical is a calibration toolbox to simultaneously calibrate the spatial and temporal 
 parameters between multiple IMUs, cameras and
@@ -41,7 +41,16 @@ we reserve all the features, functions and tools of Kalibr in this library.
 By reusing and extending the codes of Kalibr, we develop Multical. 
 
 ## Reference
-**A paper about Multical is been writing.**
+```
+@conference {332,
+	title = {Multical: Spatiotemporal Calibration for Multiple IMUs, Cameras and LiDARs},
+	booktitle = {IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+	year = {In Press},
+	publisher = {IEEE Press},
+	organization = {IEEE Press},
+	author = {Zhi, Xiangyang and Hou, Jiawei and Lu, Yiren and Kneip, Laurent and Schwertfeger, S{\"o}ren}
+}
+```
 
 ## License (BSD)
 
