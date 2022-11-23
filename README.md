@@ -41,6 +41,7 @@ we reserve all the features, functions and tools of Kalibr in this library.
 By reusing and extending the codes of Kalibr, we develop Multical. 
 
 ## Reference
+The relative paper has been published at IROS2022, see the [pre-print](https://github.com/zhixy/multical/blob/master/doc/multical.pdf). Please consider cite our paper if you are using this tool:
 ```
 @conference {332,
 	title = {Multical: Spatiotemporal Calibration for Multiple IMUs, Cameras and LiDARs},
